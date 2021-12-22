@@ -1,0 +1,4 @@
+StringLiterals:
+  Enabled: false
+EmptyMethod:
+  Enabled: false
