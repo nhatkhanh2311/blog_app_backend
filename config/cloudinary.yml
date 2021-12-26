@@ -1,0 +1,19 @@
+---
+development:
+  cloud_name: nhatkhanh2311
+  api_key: '578163716927937'
+  api_secret: gwzPJXJdQlzCIKB28mr-UaO-fDw
+  enhance_image_tag: true
+  static_file_support: false
+production:
+  cloud_name: nhatkhanh2311
+  api_key: '578163716927937'
+  api_secret: gwzPJXJdQlzCIKB28mr-UaO-fDw
+  enhance_image_tag: true
+  static_file_support: true
+test:
+  cloud_name: nhatkhanh2311
+  api_key: '578163716927937'
+  api_secret: gwzPJXJdQlzCIKB28mr-UaO-fDw
+  enhance_image_tag: true
+  static_file_support: false

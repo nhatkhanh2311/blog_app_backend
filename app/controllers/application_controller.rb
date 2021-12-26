@@ -1,9 +1,8 @@
 class ApplicationController < ActionController::API
-  def user?
+  def logged_in?
     if token
       user_id = AuthenticationTokenService.decode(token)
-      user = User.find(user_id)
-      user.id
+      @user = User.find(user_id)
     else
       render status: :unauthorized
     end
