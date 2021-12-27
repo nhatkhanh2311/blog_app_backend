@@ -10,5 +10,8 @@ Rails.application.routes.draw do
 
     # Entries
     resources :entries, only: %i[index create]
+
+    # Comments
+    resources :comments, only: %i[index create]
   end
 end
