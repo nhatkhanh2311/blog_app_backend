@@ -18,6 +18,11 @@ class Api::UsersController < ApplicationController
     render json: as_json(@user), status: :ok
   end
 
+  def user
+    user = User.find_by_username(username_params)
+    render json: as_json(user), status: :ok
+  end
+
   private
 
   def user_params
@@ -26,6 +31,7 @@ class Api::UsersController < ApplicationController
 
   def as_json(user)
     {
+      id: user.id,
       username: user.username,
       name: user.name,
       email: user.email,

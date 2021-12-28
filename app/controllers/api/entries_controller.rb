@@ -3,7 +3,13 @@ class Api::EntriesController < ApplicationController
 
   def index
     entries = @user.entries.order(created_at: :desc)
-    render json: { entries: as_json(entries), name: @user.name }, status: :ok
+    render json: { entries: as_json(entries), id: @user.id, username: @user.username, name: @user.name }, status: :ok
+  end
+
+  def index_user
+    user = User.find_by_username(username_params)
+    entries = user.entries.order(created_at: :desc)
+    render json: { entries: as_json(entries), id: user.id, username: user.username, name: user.name }, status: :ok
   end
 
   def create

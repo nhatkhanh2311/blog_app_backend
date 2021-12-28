@@ -13,4 +13,12 @@ class ApplicationController < ActionController::API
   def token
     request.headers[:Authorization].split(" ").last if request.headers[:Authorization].present?
   end
+
+  def user_id_params
+    params.require(:user_id)
+  end
+
+  def username_params
+    params.require(:username)
+  end
 end
