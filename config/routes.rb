@@ -10,6 +10,11 @@ Rails.application.routes.draw do
     # User Page
     get "user", to: "users#user"
 
+    # Follow
+    post "follow", to: "relationships#follow"
+    # Get followed users
+    get "followed-users", to: "relationships#followed_users"
+
     # Entries
     resources :entries, only: %i[index create] do
       collection do

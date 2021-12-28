@@ -1,5 +1,5 @@
 class Api::UsersController < ApplicationController
-  before_action :logged_in?, only: [:personal]
+  before_action :logged_in?, only: %i[personal]
 
   def create
     user = User.new(user_params)
@@ -15,12 +15,18 @@ class Api::UsersController < ApplicationController
   end
 
   def personal
-    render json: as_json(@user), status: :ok
+    render json: { user: as_json(@user) }, status: :ok
   end
 
   def user
     user = User.find_by_username(username_params)
-    render json: as_json(user), status: :ok
+    if !user_id.nil?
+      following = Relationship.find_by(follower_id: user_id, followed_id: user.id)
+      followed = !following.nil?
+    else
+      followed = false
+    end
+    render json: { user: as_json(user), followed: followed }, status: :ok
   end
 
   private

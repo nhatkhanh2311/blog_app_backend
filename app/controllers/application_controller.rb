@@ -10,6 +10,12 @@ class ApplicationController < ActionController::API
     render status: :unauthorized
   end
 
+  def user_id
+    AuthenticationTokenService.decode(token) if token
+  rescue JWT::DecodeError
+    render status: :unauthorized
+  end
+
   def token
     request.headers[:Authorization].split(" ").last if request.headers[:Authorization].present?
   end
