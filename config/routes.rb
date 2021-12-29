@@ -9,6 +9,8 @@ Rails.application.routes.draw do
     get "personal", to: "users#personal"
     # User Page
     get "user", to: "users#user"
+    # Search Users Page
+    get "search", to: "users#search"
 
     # Follow
     post "follow", to: "relationships#follow"
@@ -19,6 +21,7 @@ Rails.application.routes.draw do
     resources :entries, only: %i[index create] do
       collection do
         get "user", to: "entries#index_user"
+        get "all", to: "entries#index_all"
       end
     end
 

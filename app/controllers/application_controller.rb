@@ -11,9 +11,13 @@ class ApplicationController < ActionController::API
   end
 
   def user_id
-    AuthenticationTokenService.decode(token) if token
-  rescue JWT::DecodeError
-    render status: :unauthorized
+    if token
+      user_id = AuthenticationTokenService.decode(token)
+      user = User.find(user_id)
+      user_id
+    end
+  rescue ActiveRecord::RecordNotFound, JWT::DecodeError
+    nil
   end
 
   def token

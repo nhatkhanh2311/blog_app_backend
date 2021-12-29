@@ -29,10 +29,19 @@ class Api::UsersController < ApplicationController
     render json: { user: as_json(user), followed: followed }, status: :ok
   end
 
+  def search
+    users = User.where("name LIKE ? OR username LIKE ?", "%#{search_params}%", "%#{search_params}%")
+    render json: { users: as_json_search(users) }, status: :ok
+  end
+
   private
 
   def user_params
     params.require(:user).permit(:username, :password, :name, :email, :birthday, :phone, :gender)
+  end
+
+  def search_params
+    params.require(:search)
   end
 
   def as_json(user)
@@ -47,5 +56,11 @@ class Api::UsersController < ApplicationController
       created_at: user.created_at,
       updated_at: user.updated_at
     }
+  end
+
+  def as_json_search(users)
+    users.map do |user|
+      as_json(user)
+    end
   end
 end
