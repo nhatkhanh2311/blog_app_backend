@@ -2,7 +2,7 @@ class Api::RelationshipsController < ApplicationController
   before_action :logged_in?, only: %i[follow followed_users]
 
   def follow
-    following = @user.relationships.build(followed_id: followed_user_id)
+    following = @user.active_relationships.build(followed_id: followed_user_id)
     if following.save
       render status: :created
     else
@@ -11,7 +11,7 @@ class Api::RelationshipsController < ApplicationController
   end
 
   def followed_users
-    followings = @user.relationships
+    followings = @user.active_relationships
     render json: { users: followed_users_as_json(followings) }, status: :ok
   end
 

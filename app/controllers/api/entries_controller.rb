@@ -13,12 +13,12 @@ class Api::EntriesController < ApplicationController
   end
 
   def index_all
-    if !user_id.nil?
-      following_ids = Relationship.where(follower_id: user_id).map(&:followed_id)
-      entries = Entry.where("user_id IN (?) OR user_id = ?", following_ids, user_id).order(created_at: :desc)
-    else
-      entries = Entry.all.order(created_at: :desc)
-    end
+    entries = if !user_id.nil?
+                Entry.where("user_id IN (SELECT followed_id FROM relationships WHERE follower_id = #{user_id})
+                            OR user_id = #{user_id}").order(created_at: :desc)
+              else
+                Entry.all.order(created_at: :desc)
+              end
     render json: { entries: as_json_all(entries) }, status: :ok
   end
 
