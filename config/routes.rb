@@ -14,7 +14,11 @@ Rails.application.routes.draw do
 
     # Follow
     post "follow", to: "relationships#follow"
-    # Get followed users
+    # Unfollow
+    post "unfollow", to: "relationships#unfollow"
+    # Get following users
+    get "following-users", to: "relationships#following_users"
+    # Get followers
     get "followed-users", to: "relationships#followed_users"
 
     # Entries
