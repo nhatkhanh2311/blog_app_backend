@@ -3,13 +3,23 @@ class Api::EntriesController < ApplicationController
 
   def index
     entries = @user.entries.order(created_at: :desc)
-    render json: { entries: as_json(entries), username: @user.username, name: @user.name }, status: :ok
+    render json: {
+      entries: as_json(entries),
+      username: @user.username,
+      name: @user.name,
+      avatar: @user.avatar.service_url
+    }, status: :ok
   end
 
   def index_user
     user = User.find_by_username(username_params)
     entries = user.entries.order(created_at: :desc)
-    render json: { entries: as_json(entries), username: user.username, name: user.name }, status: :ok
+    render json: {
+      entries: as_json(entries),
+      username: user.username,
+      name: user.name,
+      avatar: user.avatar.service_url
+    }, status: :ok
   end
 
   def index_all
@@ -61,7 +71,8 @@ class Api::EntriesController < ApplicationController
         created_at: entry.created_at,
         updated_at: entry.updated_at,
         username: user.username,
-        name: user.name
+        name: user.name,
+        avatar: user.avatar.service_url
       }
     end
   end

@@ -40,7 +40,8 @@ class Api::RelationshipsController < ApplicationController
       user = User.find(following.followed_id)
       {
         username: user.username,
-        name: user.name
+        name: user.name,
+        avatar: user.avatar.service_url
       }
     end
   end
@@ -50,7 +51,8 @@ class Api::RelationshipsController < ApplicationController
       user = User.find(follower.follower_id)
       {
         username: user.username,
-        name: user.name
+        name: user.name,
+        avatar: user.avatar.service_url
       }
     end
   end

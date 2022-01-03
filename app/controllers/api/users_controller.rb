@@ -1,5 +1,5 @@
 class Api::UsersController < ApplicationController
-  before_action :logged_in?, only: %i[personal]
+  before_action :logged_in?, only: %i[avatar personal]
 
   def create
     user = User.new(user_params)
@@ -9,6 +9,14 @@ class Api::UsersController < ApplicationController
       render json: { message: "username taken" }, status: :unprocessable_entity
     elsif user.errors[:email].include?("has already been taken")
       render json: { message: "email taken" }, status: :unprocessable_entity
+    else
+      render status: :unprocessable_entity
+    end
+  end
+
+  def avatar
+    if @user.avatar.attach(avatar_params)
+      render status: :created
     else
       render status: :unprocessable_entity
     end
@@ -30,7 +38,7 @@ class Api::UsersController < ApplicationController
   end
 
   def search
-    users = User.where("name LIKE %#{search_params}% OR username LIKE %#{search_params}%")
+    users = User.where("LOWER(name) LIKE '%#{search_params}%' OR username LIKE '%#{search_params}%'")
     render json: { users: as_json_search(users) }, status: :ok
   end
 
@@ -38,6 +46,10 @@ class Api::UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:username, :password, :name, :email, :birthday, :phone, :gender)
+  end
+
+  def avatar_params
+    params.require(:avatar)
   end
 
   def search_params
@@ -53,6 +65,7 @@ class Api::UsersController < ApplicationController
       birthday: user.birthday,
       phone: user.phone,
       gender: user.gender,
+      avatar: user.avatar.service_url,
       created_at: user.created_at,
       updated_at: user.updated_at
     }

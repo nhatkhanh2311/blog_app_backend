@@ -33,8 +33,9 @@ class Api::CommentsController < ApplicationController
         content: comment.content,
         created_at: comment.created_at,
         updated_at: comment.updated_at,
+        username: user.username,
         name: user.name,
-        username: user.username
+        avatar: user.avatar.service_url
       }
     end
   end

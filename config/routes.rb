@@ -9,6 +9,8 @@ Rails.application.routes.draw do
     get "personal", to: "users#personal"
     # User Page
     get "user", to: "users#user"
+    # Upload Avatar
+    post "avatar", to: "users#avatar"
     # Search Users Page
     get "search", to: "users#search"
 
